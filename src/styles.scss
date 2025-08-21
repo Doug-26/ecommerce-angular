@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
-// Import Bootstrap
-@import 'bootstrap/scss/bootstrap';
+// Import Bootstrap using modern @use syntax
+@use 'bootstrap/scss/bootstrap';
 
 // Import Font Awesome (CDN alternative - add to index.html)
 // You can also install font-awesome package: npm install @fortawesome/fontawesome-free

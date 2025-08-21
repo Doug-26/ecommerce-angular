@@ -80,14 +80,15 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link position-relative" routerLink="/cart" routerLinkActive="active">
+          <a class="nav-link position-relative" routerLink="/checkout" routerLinkActive="active">
             <i class="fas fa-shopping-cart me-1"></i>
-            Cart
-            <span *ngIf="cartItemCount > 0" 
-                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              {{ cartItemCount }}
-              <span class="visually-hidden">items in cart</span>
-            </span>
+            Checkout
+            @if (cartItemCount > 0) {
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{ cartItemCount }}
+                <span class="visually-hidden">items in cart</span>
+              </span>
+            }
           </a>
         </li>
       </ul>
