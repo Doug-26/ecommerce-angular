@@ -11,7 +11,7 @@
       class="navbar-toggler" 
       type="button" 
       (click)="toggleMenu()"
-      [attr.aria-expanded]="!isMenuCollapsed"
+      [attr.aria-expanded]="!isMenuCollapsed()"
       aria-controls="navbarContent"
       aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -19,7 +19,7 @@
 
     <!-- Navbar content -->
     <div class="collapse navbar-collapse" 
-         [class.show]="!isMenuCollapsed" 
+         [class.show]="!isMenuCollapsed()" 
          id="navbarContent">
       
       <!-- Navigation links -->
@@ -83,9 +83,9 @@
           <a class="nav-link position-relative" routerLink="/checkout" routerLinkActive="active">
             <i class="fas fa-shopping-cart me-1"></i>
             Checkout
-            @if (cartItemCount > 0) {
+            @if (cartItemCount() > 0) {
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                {{ cartItemCount }}
+                {{ cartItemCount() }}
                 <span class="visually-hidden">items in cart</span>
               </span>
             }

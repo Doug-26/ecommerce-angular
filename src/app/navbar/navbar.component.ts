@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ProductService } from '../services/product';
 
 @Component({
   selector: 'app-navbar',
@@ -9,11 +10,15 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  isMenuCollapsed = true;
-  cartItemCount = 0;
+  private productService = inject(ProductService);
+  
+  isMenuCollapsed = signal<boolean>(true);
+  
+  // Get cart count from service
+  cartItemCount = this.productService.cartCount;
 
   toggleMenu() {
-    this.isMenuCollapsed = !this.isMenuCollapsed;
+    this.isMenuCollapsed.set(!this.isMenuCollapsed());
   }
 
   onSearch(event: any) {
