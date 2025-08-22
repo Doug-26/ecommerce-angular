@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, computed } from '@angular/core';
+import { Component, OnInit, signal, computed, effect, inject } from '@angular/core';
 import { ProductService } from '../../services/product';
 import { Product } from '../../models/product-model';
 
@@ -9,16 +9,27 @@ import { Product } from '../../models/product-model';
   styleUrl: './products.scss'
 })
 export class Products implements OnInit {
+  private productService = inject(ProductService);
+
   // Signals for reactive state management
   products = signal<Product[]>([]);
   loading = signal<boolean>(true);
   error = signal<string>('');
 
+  // Get filtered products and selected category from service
+  filteredProducts = this.productService.filteredProducts;
+  selectedCategory = this.productService.selectedCategory;
+
   // Computed signals for derived state
-  hasProducts = computed(() => this.products().length > 0);
+  hasProducts = computed(() => this.filteredProducts().length > 0);
   showEmptyState = computed(() => !this.loading() && !this.error() && !this.hasProducts());
 
-  constructor(private productService: ProductService) { }
+  constructor() {
+    // Effect to update local products signal when filtered products change
+    effect(() => {
+      this.products.set(this.filteredProducts());
+    });
+  }
 
   ngOnInit() {
     this.loadProducts();
@@ -35,7 +46,7 @@ export class Products implements OnInit {
       next: (products) => {
         console.log('Products loaded successfully:', products);
         console.log('Number of products:', products.length);
-        this.products.set(products);
+        // Products are now handled by the service signals
         this.loading.set(false);
         console.log('Loading state set to false:', this.loading());
       },

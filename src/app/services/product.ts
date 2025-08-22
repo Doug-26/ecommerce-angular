@@ -13,6 +13,16 @@ export class ProductService {
   private _cartCount = signal<number>(0);
   readonly cartCount = this._cartCount.asReadonly();
 
+  // Signals for category filtering
+  private _selectedCategory = signal<Category | null>(null);
+  readonly selectedCategory = this._selectedCategory.asReadonly();
+
+  private _filteredProducts = signal<Product[]>([]);
+  readonly filteredProducts = this._filteredProducts.asReadonly();
+
+  private _allProducts = signal<Product[]>([]);
+  readonly allProducts = this._allProducts.asReadonly();
+
   constructor(private http: HttpClient) { 
     // Initialize cart count
     this.loadCartCount();
@@ -22,7 +32,23 @@ export class ProductService {
   getProducts(): Observable<Product[]> {
     console.log('Fetching products from API...');
     console.log('API URL:', `${this.apiUrl}/products`);
-    return this.http.get<Product[]>(`${this.apiUrl}/products`);
+    const products$ = this.http.get<Product[]>(`${this.apiUrl}/products`);
+    
+    // Update allProducts signal when products are fetched
+    products$.subscribe({
+      next: (products) => {
+        this._allProducts.set(products);
+        // If no category is selected, show all products
+        if (!this._selectedCategory()) {
+          this._filteredProducts.set(products);
+        }
+      },
+      error: (error) => {
+        console.error('Failed to fetch products:', error);
+      }
+    });
+    
+    return products$;
   }
 
   // Get single product by ID
@@ -43,6 +69,31 @@ export class ProductService {
   // Search products
   searchProducts(query: string): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/products?q=${query}`);
+  }
+
+  // Category filtering methods
+  setSelectedCategory(category: Category | null) {
+    this._selectedCategory.set(category);
+    this.filterProductsByCategory();
+  }
+
+  clearCategoryFilter() {
+    this._selectedCategory.set(null);
+    this._filteredProducts.set(this._allProducts());
+  }
+
+  private filterProductsByCategory() {
+    const selectedCategory = this._selectedCategory();
+    const allProducts = this._allProducts();
+    
+    if (selectedCategory) {
+      const filtered = allProducts.filter(product => 
+        product.category.toLowerCase() === selectedCategory.name.toLowerCase()
+      );
+      this._filteredProducts.set(filtered);
+    } else {
+      this._filteredProducts.set(allProducts);
+    }
   }
 
   // Add product to cart

@@ -26,32 +26,51 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <i class="fas fa-home me-1"></i>
-            Home
+            <i class="fas fa-home"></i>
+            <span>Home</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/products" routerLinkActive="active">
-            <i class="fas fa-box me-1"></i>
-            Products
+            <i class="fas fa-box"></i>
+            <span>Products</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/categories" routerLinkActive="active">
-            <i class="fas fa-list me-1"></i>
-            Categories
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-list"></i>
+            <span class="category-text">Categories</span>
           </a>
+          <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+            <li>
+              <a class="dropdown-item" href="#" (click)="onShowAllProducts(); $event.preventDefault()">
+                <i class="fas fa-th me-2"></i>
+                All Products
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            @for (category of categories(); track category.id) {
+              <li>
+                <a class="dropdown-item" 
+                   href="#" 
+                   (click)="onCategoryClick(category); $event.preventDefault()"
+                   [class.active]="selectedCategory()?.id === category.id">
+                  {{ category.name }}
+                </a>
+              </li>
+            }
+          </ul>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/about" routerLinkActive="active">
-            <i class="fas fa-info-circle me-1"></i>
-            About
+            <i class="fas fa-info-circle"></i>
+            <span>About</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/contact" routerLinkActive="active">
-            <i class="fas fa-envelope me-1"></i>
-            Contact
+            <i class="fas fa-envelope"></i>
+            <span>Contact</span>
           </a>
         </li>
       </ul>
@@ -75,14 +94,14 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" routerLink="/account" routerLinkActive="active">
-            <i class="fas fa-user me-1"></i>
-            Account
+            <i class="fas fa-user"></i>
+            <span>Account</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link position-relative" routerLink="/checkout" routerLinkActive="active">
-            <i class="fas fa-shopping-cart me-1"></i>
-            Checkout
+            <i class="fas fa-shopping-cart"></i>
+            <span>Checkout</span>
             @if (cartItemCount() > 0) {
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 {{ cartItemCount() }}
