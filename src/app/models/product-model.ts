@@ -15,3 +15,8 @@ export interface Category {
   name: string;
   description: string;
 }
+
+export interface CartItem extends Product {
+  quantity?: number;
+  cartId?: number; // For json-server cart item identification
+}

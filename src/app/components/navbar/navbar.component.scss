@@ -1,5 +1,6 @@
 .navbar {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1030; // Ensure navbar stays above other content
   
   .navbar-brand {
     font-size: 1.5rem;
@@ -175,6 +176,22 @@
     height: 18px;
     line-height: 18px;
     animation: pulse 2s infinite;
+  }
+
+  .cart-count-badge {
+    font-size: 0.65rem !important;
+    min-width: 16px !important;
+    height: 16px !important;
+    line-height: 16px !important;
+    padding: 0 !important;
+    transform: translate(10%, -25%) !important;
+    top: 0.2rem !important;
+    right: -0.2rem !important;
+    left: auto !important;
+    z-index: 1000;
+    font-weight: 600;
+    border: 1px solid #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   }
 
   // Mobile responsive adjustments

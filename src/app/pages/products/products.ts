@@ -62,11 +62,11 @@ export class Products implements OnInit {
   addToCart(product: Product) {
     this.productService.addToCart(product).subscribe({
       next: () => {
-        alert(`${product.name} added to cart!`);
+        console.log(`${product.name} added to cart!`);
       },
       error: (error) => {
         console.error('Error adding to cart:', error);
-        alert('Failed to add product to cart.');
+        console.error('Failed to add product to cart.');
       }
     });
   }

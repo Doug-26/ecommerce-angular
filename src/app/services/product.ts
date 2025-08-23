@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Product, Category } from '../models/product-model';
+import { Observable, tap } from 'rxjs';
+import { Product, Category, CartItem } from '../models/product-model';
 
 @Injectable({
   providedIn: 'root'
@@ -98,41 +98,56 @@ export class ProductService {
 
   // Add product to cart
   addToCart(product: Product): Observable<any> {
-    const addToCartRequest = this.http.post(`${this.apiUrl}/cart`, product);
+    // Create cart item with quantity
+    const cartItem: CartItem = {
+      ...product,
+      quantity: 1
+    };
     
-    // Update cart count signal after successful add
-    addToCartRequest.subscribe({
-      next: () => {
-        this._cartCount.update(count => count + 1);
-      },
-      error: (error) => {
-        console.error('Failed to add to cart:', error);
-      }
-    });
-    
-    return addToCartRequest;
+    // Use tap operator to handle side effects without creating multiple subscriptions
+    return this.http.post(`${this.apiUrl}/cart`, cartItem).pipe(
+      tap({
+        next: () => {
+          this._cartCount.update(count => count + 1);
+          console.log(`${product.name} added to cart`);
+        },
+        error: (error) => {
+          console.error('Failed to add to cart:', error);
+        }
+      })
+    );
   }
 
   // Get cart items
-  getCartItems(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}/cart`);
+  getCartItems(): Observable<CartItem[]> {
+    return this.http.get<CartItem[]>(`${this.apiUrl}/cart`);
   }
 
   // Remove item from cart
-  removeFromCart(id: number): Observable<any> {
-    const removeRequest = this.http.delete(`${this.apiUrl}/cart/${id}`);
-    
-    // Update cart count signal after successful removal
-    removeRequest.subscribe({
-      next: () => {
-        this._cartCount.update(count => Math.max(0, count - 1));
-      },
-      error: (error) => {
-        console.error('Failed to remove from cart:', error);
-      }
-    });
-    
-    return removeRequest;
+  removeFromCart(cartId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/cart/${cartId}`).pipe(
+      tap({
+        next: () => {
+          this._cartCount.update(count => Math.max(0, count - 1));
+          console.log('Item removed from cart');
+        },
+        error: (error) => {
+          console.error('Failed to remove from cart:', error);
+        }
+      })
+    );
+  }
+
+  // Clear entire cart
+  clearCart(): Observable<any> {
+    return this.getCartItems().pipe(
+      tap(items => {
+        items.forEach(item => {
+          this.removeFromCart(item.cartId || item.id).subscribe();
+        });
+        this._cartCount.set(0);
+      })
+    );
   }
 
   // Load current cart count

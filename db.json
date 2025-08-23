@@ -1,7 +1,7 @@
 {
   "products": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Wireless Bluetooth Headphones",
       "price": 89.99,
       "description": "High-quality wireless headphones with noise cancellation and long battery life.",
@@ -12,7 +12,7 @@
       "reviews": 124
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Smart Watch Series 7",
       "price": 299.99,
       "description": "Latest smartwatch with health monitoring, GPS, and water resistance.",
@@ -23,7 +23,7 @@
       "reviews": 89
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Organic Cotton T-Shirt",
       "price": 24.99,
       "description": "Comfortable and sustainable organic cotton t-shirt in various colors.",
@@ -34,7 +34,7 @@
       "reviews": 56
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Premium Coffee Beans",
       "price": 19.99,
       "description": "Single-origin arabica coffee beans, freshly roasted and ground to perfection.",
@@ -45,7 +45,7 @@
       "reviews": 203
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Yoga Mat Pro",
       "price": 45.99,
       "description": "Non-slip yoga mat with extra cushioning and carrying strap included.",
@@ -56,7 +56,7 @@
       "reviews": 78
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Stainless Steel Water Bottle",
       "price": 29.99,
       "description": "Insulated water bottle that keeps drinks cold for 24 hours or hot for 12 hours.",
@@ -67,7 +67,7 @@
       "reviews": 145
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Wireless Gaming Mouse",
       "price": 79.99,
       "description": "High-precision gaming mouse with customizable RGB lighting and programmable buttons.",
@@ -78,7 +78,7 @@
       "reviews": 67
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Leather Backpack",
       "price": 129.99,
       "description": "Genuine leather backpack with laptop compartment and multiple pockets.",
@@ -91,36 +91,49 @@
   ],
   "categories": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Electronics",
       "description": "Latest gadgets and electronic devices"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Clothing",
       "description": "Fashion and apparel for all occasions"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Food & Beverages",
       "description": "Gourmet food and premium beverages"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Sports & Fitness",
       "description": "Equipment for sports and fitness activities"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Home & Kitchen",
       "description": "Home essentials and kitchen accessories"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Accessories",
       "description": "Fashion accessories and personal items"
     }
   ],
-  "cart": [],
+  "cart": [
+    {
+      "id": "4",
+      "name": "Premium Coffee Beans",
+      "price": 19.99,
+      "description": "Single-origin arabica coffee beans, freshly roasted and ground to perfection.",
+      "category": "Food & Beverages",
+      "image": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400&h=300&fit=crop",
+      "inStock": true,
+      "rating": 4.7,
+      "reviews": 203,
+      "quantity": 1
+    }
+  ],
   "orders": []
 }

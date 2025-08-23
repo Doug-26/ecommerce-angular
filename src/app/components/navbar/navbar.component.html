@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
   <div class="container">
     <!-- Brand -->
     <a class="navbar-brand fw-bold" routerLink="/">
@@ -99,11 +99,11 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link position-relative" routerLink="/checkout" routerLinkActive="active">
-            <i class="fas fa-shopping-cart"></i>
-            <span>Checkout</span>
+          <a class="nav-link position-relative" routerLink="/cart" routerLinkActive="active">
+            <i class="fas fa-shopping-cart me-1"></i>
+            <span>Cart</span>
             @if (cartItemCount() > 0) {
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-count-badge">
                 {{ cartItemCount() }}
                 <span class="visually-hidden">items in cart</span>
               </span>
